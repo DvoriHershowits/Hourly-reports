@@ -14,17 +14,15 @@ const PORT = process.env.PORT || 3000
 function createCrudRoutes(tableName) {
   const basePath = `/${tableName.toLowerCase()}`
 
-  // CREATE - מחזיר את האייטם החדש שנוצר
   app.post(basePath, async (req, res) => {
     const { data, error } = await supabase
       .from(tableName)
       .insert([req.body])
-      .select()  // ← מחזיר את האובייקט החדש
+      .select()  
     if (error) return res.status(400).json(error)
     res.json(data)
   })
 
-  // READ ALL
   app.get(basePath, async (req, res) => {
     let query = supabase.from(tableName).select('*')
 
@@ -43,7 +41,6 @@ function createCrudRoutes(tableName) {
     res.json(data)
   })
 
-  // READ ONE BY ID
   app.get(`${basePath}/:id`, async (req, res) => {
     const id = req.params.id
     let query = supabase.from(tableName).select('*').eq('id', id).single()
@@ -65,19 +62,17 @@ function createCrudRoutes(tableName) {
     res.json(data)
   })
 
-  // UPDATE BY ID - מחזיר את האייטם המעודכן
   app.put(`${basePath}/:id`, async (req, res) => {
     const id = req.params.id
     const { data, error } = await supabase
       .from(tableName)
       .update(req.body)
       .eq('id', id)
-      .select() // ← מחזיר את האובייקט המעודכן
+      .select() 
     if (error) return res.status(400).json(error)
     res.json(data)
   })
 
-  // DELETE BY ID
   app.delete(`${basePath}/:id`, async (req, res) => {
     const id = req.params.id
     const { data, error } = await supabase
