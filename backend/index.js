@@ -8,7 +8,7 @@ app.use(express.json())
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
-
+console.log('supabaseUrl',supabaseUrl)
 const PORT = process.env.PORT || 3000
 
 function createCrudRoutes(tableName) {
