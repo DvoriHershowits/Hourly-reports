@@ -1,14 +1,16 @@
 require('dotenv').config()
+const cors = require('cors');
 const express = require('express')
 const { createClient } = require('@supabase/supabase-js')
 
-const app = express()
-app.use(express.json())
-
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseKey = process.env.SUPABASE_KEY
+
+const app = express()
+app.use(express.json())
+app.use(cors());
+
 const supabase = createClient(supabaseUrl, supabaseKey)
-console.log('supabaseUrl',supabaseUrl)
 const PORT = process.env.PORT || 3000
 
 function createCrudRoutes(tableName) {
